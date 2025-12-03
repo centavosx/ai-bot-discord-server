@@ -48,6 +48,9 @@ export class EventService implements OnModuleInit {
     this.client.on('ready', () => {
       console.log(`Logged in as ${this.client?.user?.tag}!`);
       console.log('Application Id: ', this.client.application?.id);
+
+      console.log(`Webhook: `, this.configService.get('webhook'));
+
       this.listenToEventMessages();
     });
 
@@ -83,7 +86,7 @@ export class EventService implements OnModuleInit {
 
         if (!result) return;
 
-        console.log('Request status: ', result.status);
+        console.log('Request status: ', result.data, result.status);
       });
   }
 
