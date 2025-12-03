@@ -92,13 +92,15 @@ export class EventService implements OnModuleInit {
 
   listenToEventMessages() {
     this.client.on('messageCreate', async (interaction) => {
+      const applicationId = String(this.client.application?.id);
+
       const hasMention = Array.from(interaction.mentions.users.keys()).includes(
-        String(this.client.application?.id),
+        applicationId,
       );
 
       console.log(`User-${interaction.author.id} mentions`, hasMention);
 
-      if (!hasMention) return;
+      if (!hasMention || interaction.author.id === applicationId) return;
 
       this.message$.next(interaction);
     });
