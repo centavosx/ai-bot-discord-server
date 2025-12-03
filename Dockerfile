@@ -29,8 +29,5 @@ COPY --from=base /app/scripts ./scripts
 COPY --from=base /app/package.json .
 COPY --from=base /app/.yarn /.yarn
 COPY --from=base /app/.yarnrc.yml .
-COPY --from=base /app/entrypoint.sh .
-COPY --from=base /app/task.sh .
-COPY --from=base /app/templates ./templates
 
 CMD ["node", "dist/main"]
