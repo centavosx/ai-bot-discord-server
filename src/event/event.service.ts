@@ -47,6 +47,7 @@ export class EventService implements OnModuleInit {
 
     this.client.on('ready', () => {
       console.log(`Logged in as ${this.client?.user?.tag}!`);
+      console.log('Application Id: ', this.client.application?.id);
       this.listenToEventMessages();
     });
 
@@ -64,6 +65,8 @@ export class EventService implements OnModuleInit {
         mergeMap((group$) => group$.pipe(debounceTime(2500))),
       )
       .subscribe(async (interaction) => {
+        console.log(`${interaction.author.id} attempted an api call`);
+
         const [result, error] = await tryCatch(() =>
           this.httpService.post('/', {
             messageId: interaction.id,
@@ -79,6 +82,8 @@ export class EventService implements OnModuleInit {
         }
 
         if (!result) return;
+
+        console.log('Request status: ', result.status);
       });
   }
 
@@ -87,6 +92,8 @@ export class EventService implements OnModuleInit {
       const hasMention = Array.from(interaction.mentions.users.keys()).includes(
         String(this.client.application?.id),
       );
+
+      console.log(`User-${interaction.author.id} mentions`, hasMention);
 
       if (!hasMention) return;
 
