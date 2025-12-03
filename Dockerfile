@@ -25,7 +25,6 @@ WORKDIR /app
 COPY --from=base /app/dist ./dist
 COPY --from=base /app/.env .
 COPY --from=base /app/node_modules ./node_modules
-COPY --from=base /app/scripts ./scripts
 COPY --from=base /app/package.json .
 COPY --from=base /app/.yarn /.yarn
 COPY --from=base /app/.yarnrc.yml .
