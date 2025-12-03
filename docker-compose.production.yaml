@@ -1,0 +1,21 @@
+services:
+  placebuddy-backend-staging:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    networks:
+      - dokploy-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.backend-staging.rule=Host(`api-staging.placebuddy.ph`)
+      - traefik.http.routers.backend-staging.entrypoints=websecure
+      - traefik.http.routers.backend-staging.tls.certResolver=letsencrypt
+      - traefik.http.services.backend-staging.loadbalancer.server.port=3003
+    env_file:
+      - .env
+    ports:
+      - 3003
+
+networks:
+  dokploy-network:
+    external: true
